@@ -3,155 +3,229 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instagram Cyber Intel X</title>
+    <title>Instagram Unfollowers | Analysis Tool</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --border: #334155;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            margin: 0;
-            padding: 0;
-            background-color: #000;
-            color: #00ff41;
-            font-family: 'Share Tech Mono', monospace;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            overflow: hidden;
-            background-image: linear-gradient(rgba(0, 255, 65, 0.03) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(0, 255, 65, 0.03) 1px, transparent 1px);
-            background-size: 30px 30px;
+            min-height: 100vh;
+            background-image: radial-gradient(circle at top center, #1e293b 0%, #0f172a 60%);
         }
 
         .container {
+            width: 90%;
+            max-width: 700px;
             text-align: center;
-            max-width: 800px;
-            padding: 20px;
-            border: 1px solid #00ff41;
-            background: rgba(0, 20, 0, 0.8);
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
-            position: relative;
+            z-index: 10;
+        }
+
+        /* Logo / Icon Area */
+        .icon-box {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), #60a5fa);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin: 0 auto 20px auto;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
         }
 
         h1 {
-            font-size: 3rem;
-            margin: 0 0 20px 0;
-            text-shadow: 0 0 10px #00ff41;
-            letter-spacing: 2px;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        p {
-            color: #ccc;
+        .subtitle {
+            color: var(--text-sub);
             font-size: 1.1rem;
-            margin-bottom: 30px;
-            line-height: 1.5;
+            margin-bottom: 40px;
+            line-height: 1.6;
+            font-weight: 300;
         }
 
-        .code-box {
-            position: relative;
+        /* Code Card */
+        .card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 5px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
             margin-bottom: 30px;
+            text-align: left;
         }
+
+        .card-header {
+            padding: 10px 15px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .dot.red { background: #ef4444; }
+        .dot.yellow { background: #f59e0b; }
+        .dot.green { background: #10b981; }
 
         textarea {
             width: 100%;
-            height: 100px;
-            background: #050505;
-            border: 1px solid #333;
-            color: #008f11;
-            padding: 10px;
-            font-family: monospace;
+            height: 120px;
+            background: transparent;
+            border: none;
+            color: #cbd5e1;
+            padding: 15px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 12px;
             resize: none;
-            opacity: 0.5;
-            pointer-events: none; /* Kullanıcı elle seçemesin, butona bassın */
+            outline: none;
+            line-height: 1.5;
         }
 
+        /* Button */
         .btn {
-            background: transparent;
-            color: #00ff41;
-            border: 2px solid #00ff41;
-            padding: 15px 40px;
-            font-size: 1.5rem;
-            font-family: inherit;
+            background: linear-gradient(to right, var(--primary), var(--primary-hover));
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 12px;
             cursor: pointer;
-            text-transform: uppercase;
-            transition: all 0.3s;
-            font-weight: bold;
-            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .btn:hover {
-            background: #00ff41;
-            color: #000;
-            box-shadow: 0 0 30px #00ff41;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
         }
 
+        .btn:active { transform: translateY(0); }
+
+        /* Instructions */
+        .steps {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            color: var(--text-sub);
+            font-size: 0.9rem;
+        }
+        .step { display: flex; flex-direction: column; gap: 5px; align-items: center; }
+        .step-num { 
+            width: 24px; height: 24px; background: var(--border); 
+            border-radius: 50%; display: flex; align-items: center; 
+            justify-content: center; font-weight: bold; color: #fff; font-size: 12px;
+        }
+
+        /* Toast */
         .toast {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #00ff41;
-            color: #000;
-            padding: 10px 20px;
-            font-weight: bold;
-            border-radius: 5px;
-            opacity: 0;
-            transition: opacity 0.5s;
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+            background: #10b981; color: #fff; padding: 12px 24px; border-radius: 50px;
+            font-weight: 600; font-size: 14px; box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+            opacity: 0; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
-        .scanline {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.3) 51%);
-            background-size: 100% 4px;
-            pointer-events: none;
-            z-index: 10;
+        /* Footer */
+        .footer {
+            position: absolute; bottom: 20px; font-size: 12px; color: #475569;
         }
     </style>
 </head>
 <body>
 
-    <div class="scanline"></div>
-
     <div class="container">
-        <h1>CYBER INTEL X</h1>
-        <p>
-            Advanced Instagram Analytics Tool.<br>
-            Identify Non-Followers, Track History, Whitelist Friends.<br>
+        <div class="icon-box">✨</div>
+        <h1>Instagram Unfollowers</h1>
+        <p class="subtitle">
+            Professional Instagram Analytics Tool.<br>
+            Identify non-followers and analyze your account data securely.<br>
             Client-side execution. Safe & Secure.
         </p>
 
-        <div class="code-box">
-            <textarea id="codeArea" readonly>(()=>{"use strict";const CONFIG={limits:{actionBatch:10,actionCooldown:15000,actionDelay:2000,fetchBatch:200,fetchCooldown:10000},colors:{bg:"#000000",panel:"#0a0a0a",primary:"#00ff41",text:"#cccccc",alert:"#ff003c",cyan:"#00f3ff",grid:"rgba(0, 255, 65, 0.03)"},storageKeys:{whitelist:"ig_cyber_whitelist",history:"ig_cyber_history"}};const STATE={id:null,token:null,data:{followers:[],following:[]},lists:{nonFollowers:[],fans:[],lost:[]},whitelist:new Set,selection:new Set,processing:!1};const sleep=e=>new Promise((t=>setTimeout(t,e))),getCookie=e=>{let t=`; ${document.cookie}`.match(`;\\s*${e}=([^;]+)`);return t?t[1]:""},Storage={load:()=>{const e=localStorage.getItem(CONFIG.storageKeys.whitelist);return e&&(STATE.whitelist=new Set(JSON.parse(e))),localStorage.getItem(CONFIG.storageKeys.history)},saveWhitelist:()=>localStorage.setItem(CONFIG.storageKeys.whitelist,JSON.stringify([...STATE.whitelist])),saveHistory:e=>{const t=e.map((e=>({id:e.id,username:e.username})));localStorage.setItem(CONFIG.storageKeys.history,JSON.stringify(t))}};class UI{constructor(){this.init()}init(){const e=document.getElementById("cyber-intel-x");e&&e.remove();const t=document.createElement("style");t.innerHTML=`#cyber-intel-x{position:fixed;top:0;left:0;width:100vw;height:100vh;background-color:${CONFIG.colors.bg};color:${CONFIG.colors.text};font-family:Consolas,'Courier New',monospace;z-index:999999;display:flex;overflow:hidden;background-image:linear-gradient(${CONFIG.colors.grid} 1px,transparent 1px),linear-gradient(90deg,${CONFIG.colors.grid} 1px,transparent 1px);background-size:30px 30px}@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}.boot-layer{position:absolute;top:0;left:0;width:100%;height:100%;background:#000;z-index:10000;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 1s}.boot-layer.hidden{opacity:0;pointer-events:none}.boot-brand{font-size:32px;color:${CONFIG.colors.primary};font-weight:700;text-shadow:0 0 15px ${CONFIG.colors.primary};margin-bottom:30px;letter-spacing:4px}.boot-terminal{width:600px;height:300px;background:#050505;border:1px solid #333;padding:20px;overflow-y:auto;font-family:monospace;font-size:12px;box-shadow:0 0 30px rgba(0,255,65,.1)}.boot-line{margin-bottom:5px;animation:slideUp .1s forwards}.boot-line.dim{color:#555}.boot-line.highlight{color:#fff;font-weight:700}.boot-line.success{color:${CONFIG.colors.primary}}.boot-line.warn{color:${CONFIG.colors.alert}}.sidebar{width:260px;background:rgba(0,0,0,.95);border-right:1px solid #333;display:flex;flex-direction:column;padding:20px}.main{flex:1;display:flex;flex-direction:column;position:relative;background:rgba(5,5,5,.9)}.brand{font-size:20px;color:${CONFIG.colors.primary};font-weight:700;margin-bottom:30px;border-left:4px solid ${CONFIG.colors.primary};padding-left:10px;text-transform:uppercase;letter-spacing:2px}.menu-btn{padding:12px 15px;margin-bottom:8px;cursor:pointer;border:1px solid transparent;color:#666;transition:.3s;display:flex;justify-content:space-between;align-items:center}.menu-btn:hover{color:#fff;background:rgba(255,255,255,.05)}.menu-btn.active{color:#000;background:${CONFIG.colors.primary};border-color:${CONFIG.colors.primary};box-shadow:0 0 15px ${CONFIG.colors.primary};font-weight:700}.badge{font-size:10px;padding:2px 6px;border-radius:4px;background:rgba(0,0,0,.5);color:inherit}.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;padding:30px}.stat-card{background:rgba(255,255,255,.02);border:1px solid #333;padding:20px;display:flex;flex-direction:column;gap:5px;transition:.3s}.stat-card:hover{border-color:${CONFIG.colors.primary};box-shadow:inset 0 0 20px rgba(0,255,65,.05)}.stat-num{font-size:32px;color:#fff;font-weight:700;font-family:monospace}.stat-label{font-size:12px;color:#666;text-transform:uppercase}.list-container{flex:1;overflow-y:auto;padding:20px}.char-header{font-size:18px;color:${CONFIG.colors.primary};margin:20px 0 10px 0;border-bottom:1px solid #333;padding-bottom:5px;font-weight:700}.user-row{display:flex;align-items:center;padding:10px;margin-bottom:5px;background:rgba(0,0,0,.4);border:1px solid #222;cursor:pointer;transition:.2s}.user-row:hover{border-color:#555;background:rgba(255,255,255,.05)}.user-row.selected{border-color:${CONFIG.colors.alert};background:rgba(255,0,60,.1)}.user-row.shielded{border-color:${CONFIG.colors.cyan};opacity:.7}.avatar{width:40px;height:40px;border-radius:50%;margin-right:15px;object-fit:cover;background:#111;border:1px solid #333}.dash-terminal{height:120px;background:#000;border-top:2px solid ${CONFIG.colors.primary};padding:10px 30px;overflow-y:auto;font-family:monospace;font-size:11px;color:#888}.cursor{display:inline-block;width:8px;height:14px;background:${CONFIG.colors.primary};animation:blink 1s infinite;vertical-align:middle}.action-bar{padding:15px 30px;border-top:1px solid #333;background:#080808;display:flex;justify-content:space-between;align-items:center}.btn-exec{padding:10px 30px;background:transparent;border:1px solid ${CONFIG.colors.alert};color:${CONFIG.colors.alert};font-family:inherit;font-weight:700;cursor:pointer;transition:.3s;text-transform:uppercase}.btn-exec:hover{background:${CONFIG.colors.alert};color:#000;box-shadow:0 0 15px ${CONFIG.colors.alert}}.btn-exec:disabled{border-color:#333;color:#333;cursor:not-allowed;box-shadow:none}.btn-safe{border-color:${CONFIG.colors.primary};color:${CONFIG.colors.primary}}.btn-safe:hover{background:${CONFIG.colors.primary};color:#000;box-shadow:0 0 20px ${CONFIG.colors.primary}}`,document.head.appendChild(t),this.root=document.createElement("div"),this.root.id="cyber-intel-x",this.root.innerHTML=`<div class="boot-layer" id="boot-layer"><div class="boot-brand">CYBER INTEL X</div><div class="boot-terminal" id="boot-log"><div class="boot-line">> Kernel init...</div></div></div><div class="sidebar"><div class="brand">SYSTEM ONLINE</div><div id="menu"><div class="menu-btn active" data-tab="dashboard">WAR ROOM</div><div class="menu-btn" data-tab="nonFollowers">HAİNLER <span class="badge" id="c-non">0</span></div><div class="menu-btn" data-tab="fans">HAYRANLAR <span class="badge" id="c-fans">0</span></div><div class="menu-btn" data-tab="history">GEÇMİŞ <span class="badge" id="c-hist">0</span></div><div class="menu-btn" data-tab="whitelist">KORUNANLAR <span class="badge" id="c-white">0</span></div></div><div style="margin-top:auto;font-size:10px;color:#555">SECURE CONNECTION</div></div><div class="main"><div style="flex:1;display:flex;flex-direction:column;overflow:hidden"><div style="padding:15px 30px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center"><div style="font-size:12px;color:#666">HEDEF: <span style="color:#fff;font-weight:700" id="target-id">...</span></div><button id="btn-select-all" style="background:#222;color:#fff;border:none;padding:5px 15px;cursor:pointer;font-size:11px">TÜMÜNÜ SEÇ</button></div><div class="list-container" id="list-view"></div></div><div class="action-bar"><div style="font-size:12px;color:#666">SEÇİLİ: <span id="count-sel" style="color:#fff">0</span></div><button class="btn-exec" id="btn-run" disabled>SİSTEM MEŞGUL</button></div><div class="dash-terminal" id="dash-term"><div class="boot-line">> Dashboard initialized. <span class="cursor"></span></div></div></div>`,document.body.appendChild(this.root),this.bind()}bind(){document.querySelectorAll(".menu-btn").forEach((e=>{e.addEventListener("click",(()=>{app.setTab(e.dataset.tab)}))})),document.getElementById("btn-select-all").addEventListener("click",(()=>app.toggleSelectAll())),document.getElementById("btn-run").addEventListener("click",(()=>app.runBatch()))}log(e,t=""){const a=document.getElementById("boot-log");if(a&&"none"!==document.getElementById("boot-layer").style.display){const n=document.createElement("div");n.className=`boot-line ${t}`,n.innerText=`> ${e}`,a.appendChild(n),a.scrollTop=a.scrollHeight}const n=document.getElementById("dash-term");if(n){const a=document.createElement("div");a.className=`boot-line ${t}`;const o=(new Date).toLocaleTimeString().split(" ")[0];a.innerText=`[${o}] ${e}`,n.insertBefore(a,n.firstChild)}}hideBoot(){const e=document.getElementById("boot-layer");e.classList.add("hidden"),setTimeout((()=>e.style.display="none"),1e3)}updateCounts(){document.getElementById("c-non").innerText=STATE.lists.nonFollowers.length,document.getElementById("c-fans").innerText=STATE.lists.fans.length,document.getElementById("c-hist").innerText=STATE.lists.lost.length,document.getElementById("c-white").innerText=STATE.whitelist.size;const e=STATE.selection.size;document.getElementById("count-sel").innerText=e;const t=document.getElementById("btn-run");t.disabled=0===e||STATE.processing,e>0?("fans"===STATE.activeTab?(t.className="btn-exec btn-safe",t.innerText=`TAKİP ET (${e})`):(t.className="btn-exec",t.innerText=`SİL / ÇIKAR (${e})`)):(t.className="btn-exec",t.innerText="SEÇİM YAPINIZ")}renderDashboard(e){e.innerHTML=`<div class="stats-grid"><div class="stat-card"><div class="stat-num" style="color:${CONFIG.colors.primary}">${STATE.data.followers.length}</div><div class="stat-label">Takipçi</div></div><div class="stat-card"><div class="stat-num" style="color:#fff">${STATE.data.following.length}</div><div class="stat-label">Takip Edilen</div></div><div class="stat-card" style="border-color:${CONFIG.colors.alert}"><div class="stat-num" style="color:${CONFIG.colors.alert}">${STATE.lists.nonFollowers.length}</div><div class="stat-label">Hainler</div></div><div class="stat-card"><div class="stat-num" style="color:#fff">${STATE.lists.fans.length}</div><div class="stat-label">Hayranlar</div></div></div>`}render(e){document.querySelectorAll(".menu-btn").forEach((e=>e.classList.remove("active"))),document.querySelector(`.menu-btn[data-tab="${e}"]`).classList.add("active");const t=document.getElementById("list-view");if(t.innerHTML="","dashboard"===e)return void this.renderDashboard(t);let a=[];a="nonFollowers"===e?STATE.lists.nonFollowers:"fans"===e?STATE.lists.fans:"history"===e?STATE.lists.lost:"whitelist"===e?[...STATE.whitelist].map((e=>[...STATE.data.followers,...STATE.data.following].find((t=>t.id===e))||{id:e,username:"Unknown"})):[],0!==a.length?(a.sort(((e,t)=>(e.username||"").localeCompare(t.username||""))),(()=>{let n="";a.forEach((a=>{if(!a.username)return;const o=a.username.charAt(0).toUpperCase();o!==n&&(n=o,(()=>{const e=document.createElement("div");e.className="char-header",e.innerText=n,t.appendChild(e)})());const s=STATE.selection.has(a.id),i=STATE.whitelist.has(a.id),r=document.createElement("div");r.className=`user-row ${s?"selected":""} ${i?"shielded":""}`,r.innerHTML=`<img src="${a.profile_pic_url}" class="avatar" referrerpolicy="no-referrer"><div style="flex:1"><div style="color:${CONFIG.colors.primary};font-weight:700">${a.username} ${i?"🛡️":""}</div><div style="font-size:11px;color:#666">${a.full_name||""}</div></div><div class="shield-toggle" style="cursor:pointer">${i?"🔒":"🔓"}</div>`,r.addEventListener("click",(t=>{t.target.classList.contains("shield-toggle")?app.toggleWhitelist(a.id):app.toggleSelect(a.id)})),t.appendChild(r)}))})()):t.innerHTML='<div style="text-align:center;padding:40px;color:#555;">VERİ BULUNAMADI.</div>'} }class App{constructor(){this.ui=new UI,this.oldHistory=JSON.parse(Storage.load()||"[]")}async start(){this.ui.log("Establishing secure connection..."),await sleep(500),STATE.token=getCookie("csrftoken");if(!STATE.id)try{let e=window.location.pathname.replace(/\//g,""),t=await fetch(`https://www.instagram.com/api/v1/users/web_profile_info/?username=${e}`,{headers:{"X-IG-App-ID":"936619743392459"}}),a=await t.json();STATE.id=a.data.user.id,document.getElementById("target-id").innerText=e.toUpperCase(),this.ui.log(`Target Identified: ${e.toUpperCase()}`,"highlight")}catch(e){return void this.ui.log("ERROR: ID Not Found. Refresh page.","warn")}await this.fetchData("following"),await this.fetchData("followers"),this.ui.log("Analyzing Social Graph...","highlight"),this.analyze(),await sleep(500),this.ui.log("ACCESS GRANTED.","success"),await sleep(1e3),this.ui.hideBoot(),this.ui.updateCounts(),this.setTab("dashboard")}async fetchData(e){let t="followers"===e?"c76146de99bb02f6415203be841dd25a":"d04b0a864b4b54837c0d870b0e77e076",a="followers"===e?"edge_followed_by":"edge_follow",n={id:STATE.id,include_reel:!0,fetch_mutual:!1,first:50},o=[],s=!0,i=0;for(this.ui.log(`Initialize download: ${e.toUpperCase()}`);s;)try{let r=await fetch(`https://www.instagram.com/graphql/query/?query_hash=${t}&variables=${encodeURIComponent(JSON.stringify(n))}`),c=await r.text();if(c.trim().startsWith("<")){this.ui.log(`WARNING: API Limit hit for ${e}`,"warn");break}let l=JSON.parse(c),d=l.data.user[a].edges;o=o.concat(d.map((e=>e.node))),i+=d.length,this.ui.log(`Downloading ${e}... [${o.length}]`,"dim"),i%CONFIG.limits.fetchBatch==0?(this.ui.log("Security pause enabled...","warn"),await sleep(CONFIG.limits.fetchCooldown)):await sleep(300),s=l.data.user[a].page_info.has_next_page,n.after=l.data.user[a].page_info.end_cursor}catch(e){break}STATE.data[e]=o,this.ui.log(`${e.toUpperCase()} COMPLETE. Total: ${o.length}`,"success")}analyze(){const e=new Set(STATE.data.followers.map((e=>e.id))),t=new Set(STATE.data.following.map((e=>e.id)));STATE.lists.nonFollowers=STATE.data.following.filter((t=>!e.has(t.id))),STATE.lists.fans=STATE.data.followers.filter((e=>!t.has(e.id))),this.oldHistory.length>0&&(const t=new Set(STATE.data.followers.map((e=>e.id)));STATE.lists.lost=this.oldHistory.filter((e=>!t.has(e.id)))),Storage.saveHistory(STATE.data.followers)}setTab(e){STATE.activeTab=e,STATE.selection.clear(),this.ui.render(e),this.ui.updateCounts()}toggleSelect(e){STATE.selection.has(e)?STATE.selection.delete(e):STATE.selection.add(e),this.ui.render(STATE.activeTab),this.ui.updateCounts()}toggleSelectAll(){let e=[];e="nonFollowers"===STATE.activeTab?STATE.lists.nonFollowers:"fans"===STATE.activeTab?STATE.lists.fans:[],e=e.filter((e=>!STATE.whitelist.has(e.id))),STATE.selection.size===e.length?STATE.selection.clear():e.forEach((e=>STATE.selection.add(e.id))),this.ui.render(STATE.activeTab),this.ui.updateCounts()}toggleWhitelist(e){STATE.whitelist.has(e)?STATE.whitelist.delete(e):STATE.whitelist.add(e),Storage.saveWhitelist(),STATE.selection.has(e)&&STATE.selection.delete(e),this.ui.render(STATE.activeTab),this.ui.updateCounts()}async runBatch(){if(STATE.processing)return;let e=Array.from(STATE.selection);if(!confirm(`${e.length} işlem başlatılıyor. Onaylıyor musun?`))return;STATE.processing=!0,this.ui.updateCounts();let t="nonFollowers"===STATE.activeTab?"unfollow":"follow",a=0;for(let n of e){a>0&&a%CONFIG.limits.actionBatch==0?(this.ui.log(`Cooling down (${CONFIG.limits.actionCooldown/1e3}s)...`,"warn"),await sleep(CONFIG.limits.actionCooldown)):await sleep(CONFIG.limits.actionDelay);let o=[...STATE.data.followers,...STATE.data.following].find((e=>e.id===n));this.ui.log(`Executing ${t}: ${o?o.username:n}`);try{let e=`https://www.instagram.com/web/friendships/${n}/${t}/`;(await fetch(e,{method:"POST",headers:{"x-csrftoken":STATE.token,"x-instagram-ajax":"1","x-requested-with":"XMLHttpRequest","x-ig-app-id":"936619743392459"}})).ok&&(STATE.selection.delete(n),"nonFollowers"===STATE.activeTab&&(STATE.lists.nonFollowers=STATE.lists.nonFollowers.filter((e=>e.id!==n))))}catch(e){}a++,this.ui.updateCounts()}STATE.processing=!1,this.ui.log("BATCH OPERATION COMPLETE.","success"),this.setTab(STATE.activeTab)}}const app=new App;window.cyApp=app,app.start()})();</textarea>
+        <div class="card">
+            <div class="card-header">
+                <div class="dot red"></div>
+                <div class="dot yellow"></div>
+                <div class="dot green"></div>
+            </div>
+            <textarea id="codeArea" readonly>// Code placeholder...</textarea>
         </div>
 
-        <button class="btn" onclick="copyCode()">COPY SCRIPT</button>
+        <button class="btn" onclick="copyCode()">
+            <span>🚀</span> COPY SCRIPT
+        </button>
 
-        <div class="toast" id="toast">COPIED TO CLIPBOARD!</div>
+        <div class="steps">
+            <div class="step">
+                <div class="step-num">1</div>
+                <span>Go to Profile</span>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <span>Right Click -> Inspect</span>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <span>Paste into Console</span>
+            </div>
+        </div>
+
+        <div class="toast" id="toast">Code copied to clipboard!</div>
+        
+        <div class="footer">
+            © 2024 Instagram Unfollowers. Client-side execution only. Use responsibly.
+        </div>
     </div>
 
     <script>
         function copyCode() {
             const textArea = document.getElementById('codeArea');
             textArea.select();
-            textArea.setSelectionRange(0, 99999); /* For mobile devices */
+            textArea.setSelectionRange(0, 99999); 
             
             navigator.clipboard.writeText(textArea.value).then(function() {
                 showToast();
             }, function(err) {
-                console.error('Async: Could not copy text: ', err);
+                console.error('Copy error: ', err);
             });
         }
 
         function showToast() {
             const toast = document.getElementById('toast');
-            toast.style.opacity = '1';
+            toast.classList.add('show');
             setTimeout(() => {
-                toast.style.opacity = '0';
+                toast.classList.remove('show');
             }, 2000);
         }
     </script>
